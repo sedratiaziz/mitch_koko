@@ -17,40 +17,37 @@ class _MainState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.blueGrey,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
+        body: Column(
+          children: [
+            SizedBox(
+              height: 200,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  Container(
+                    width: 400,
+                    color: const Color.fromARGB(255, 255, 36, 7),
+                    child: Text('Box'),
+                  ),
+                  Container(
+                    width: 400,
                     color: Colors.amber,
-                    borderRadius: BorderRadius.circular(20),
+                    child: Text('Box'),
                   ),
-                ),
-              ),
-          
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 115, 206, 4),
-                    borderRadius: BorderRadius.circular(20),
+                  Container(
+                    width: 400,
+                    color: const Color.fromARGB(255, 61, 255, 7),
+                    child: Text('Box'),
                   ),
-                ),
+                ],
               ),
-          
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 134, 2, 2),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+            Column(
+              children: [
+                Text('data')
+              ],
+            ),
+          ],
         ),
       ),
     );
