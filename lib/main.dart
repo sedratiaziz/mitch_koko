@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mitch_koko/pages/explore_page.dart';
+import 'package:mitch_koko/pages/first_page.dart';
 import 'package:mitch_koko/pages/home_page.dart';
 import 'package:mitch_koko/pages/settings_page.dart';
 
@@ -18,9 +20,10 @@ class _MainState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: FirstPage(),
       routes: {
         '/home': (context) => HomePage(),
+        '/explore': (context) => ExplorePage(),
         '/settings': (context) => SettingsPage(),
       },
     );
