@@ -10,7 +10,7 @@ class TodoItem extends StatelessWidget {
     super.key, 
     required this.text,
     required this.checked,
-     this.checkbox_onchange,
+    required this.checkbox_onchange,
      this.delete,
   });
 
@@ -30,7 +30,13 @@ class TodoItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Checkbox(value: checked, onChanged: checkbox_onchange),
-            Text(text), 
+            Text(
+              text, 
+              style: TextStyle(
+               decoration: checked ? TextDecoration.lineThrough : TextDecoration.none,
+               fontSize: 26,
+               fontWeight: FontWeight.bold,
+            ),), 
             // ElevatedButton(onPressed: , child: Text('data')),
           ],
         ),
