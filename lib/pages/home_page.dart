@@ -20,6 +20,12 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _removeTodo(int index) {
+    setState(() {
+      todos.removeAt(index);
+    });
+  }
+  
   void _addTodo() {
     setState(() {
       todos.add({'text': myController.text, 'checked': false});
@@ -49,17 +55,16 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(title: Text('المهام')),
       floatingActionButton: FloatingActionButton(
         onPressed: _createNewTodo,
-        child: Icon(Icons.kitchen_outlined),
+        child: Icon(Icons.add),
       ),
-      body: Expanded(
-        child: ListView.builder(
-          padding: EdgeInsets.all(20),
-          itemCount: todos.length,
-          itemBuilder: (context, index) => TodoItem(
-            text: todos[index]['text'],
-            checked: todos[index]['checked'],
-            checkbox_onchange: (value) => _handleCheckboxChange(value, index),
-          ),
+      body: ListView.builder(
+        padding: EdgeInsets.all(20),
+        itemCount: todos.length,
+        itemBuilder: (context, index) => TodoItem(
+          text: todos[index]['text'],
+          checked: todos[index]['checked'],
+          checkboxOnChange: (value) => _handleCheckboxChange(value, index),
+          delete: (context) => _removeTodo(index),
         ),
       ),
     );
