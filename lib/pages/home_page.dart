@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+
+import 'package:hive_ce/hive_ce.dart';
 import 'package:mitch_koko/components/dialog_box.dart';
 import 'package:mitch_koko/components/todo_item.dart';
+import 'package:mitch_koko/data/Todo_db.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,26 +14,54 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TextEditingController myController = TextEditingController();
+  TodoDB db = TodoDB();
+  final _mybox = Hive.box('myBox');
 
-  List todos = [];
+  @override
+  void initState() {
+    super.initState();
+    // TODO: implement initState
+    if (_mybox.get('todoList') == null) {
+      db.InitializeData();
+      db.updateData();
+    } else {
+      db.loadData();
+    }
+  }
 
   void _handleCheckboxChange(bool? value, int index) {
     setState(() {
-      todos[index]['checked'] = !todos[index]['checked'];
+      db.todos[index]['checked'] = !db.todos[index]['checked'];
     });
+
+    db.updateData();
   }
+
+
 
   void _removeTodo(int index) {
     setState(() {
-      todos.removeAt(index);
+      db.todos.removeAt(index);
     });
+
+    db.updateData();
   }
   
+
+
   void _addTodo() {
+    Map data = {'text': myController.text, 'checked': false};
+    
     setState(() {
-      todos.add({'text': myController.text, 'checked': false});
+      db.todos.add(data);
       myController.clear();
     });
+
+    db.updateData();
+    // print('a');
+    // _box.put('name', 'ali');
+    // print(_box.get('name'));
+
     Navigator.pop(context);
   }
 
@@ -39,7 +70,7 @@ class _HomePageState extends State<HomePage> {
       context: context,
       builder: (context) => AlertDialog(
         content: DialogBox(
-          todos: todos,
+          todos: db.todos,
           controller: myController,
           OnAdd: _addTodo,
           OnCancel: () => Navigator.pop(context),
@@ -59,10 +90,10 @@ class _HomePageState extends State<HomePage> {
       ),
       body: ListView.builder(
         padding: EdgeInsets.all(20),
-        itemCount: todos.length,
+        itemCount: db.todos.length,
         itemBuilder: (context, index) => TodoItem(
-          text: todos[index]['text'],
-          checked: todos[index]['checked'],
+          text: db.todos[index]['text'],
+          checked: db.todos[index]['checked'],
           checkboxOnChange: (value) => _handleCheckboxChange(value, index),
           delete: (context) => _removeTodo(index),
         ),
