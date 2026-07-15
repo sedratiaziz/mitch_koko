@@ -1,4 +1,4 @@
-# mitch_koko
+# e_commerce
 
 A new Flutter project.
 

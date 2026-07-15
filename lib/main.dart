@@ -1,25 +1,42 @@
+import 'package:e_commerce/pages/cart_page.dart';
+import 'package:e_commerce/pages/explore_page.dart';
+import 'package:e_commerce/pages/first_page.dart';
+import 'package:e_commerce/pages/home_page.dart';
+import 'package:e_commerce/pages/orders_page.dart';
+import 'package:e_commerce/pages/profile_page.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_ce/hive.dart';
-import 'package:hive_ce_flutter/adapters.dart';
-import 'package:mitch_koko/pages/home_page.dart';
 
-void main() async {
-  // Initialize Hive
-  await Hive.initFlutter();
-  final box = await Hive.openBox('myBox');
-
+void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  const MyApp({ Key? key }) : super(key: key);
 
+  @override
+  _MainState createState() => _MainState();
+}
+
+class _MainState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomePage(),
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.teal,
+          brightness: Brightness.dark,
+        )
+      ),
+      home: FirstPage(),
+      routes: {
+        'home': (context) => HomePage(),
+        'explore': (context) => ExplorePage(),
+        'cart': (context) => CartPage(),
+        'orders': (context) => OrdersPage(),
+        'profile': (context) => ProfilePage(),
+
+      },
+      
     );
   }
 }
